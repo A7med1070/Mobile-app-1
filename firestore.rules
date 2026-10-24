@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    match /users/{userId} {
+      allow get, list, create, update, delete: if isSignedIn() && request.auth.uid == userId;
+
+      match /tasks/{taskId} {
+        allow get, list: if isSignedIn() && request.auth.uid == userId;
+        allow create, update, delete: if isSignedIn() && request.auth.uid == userId;
+      }
+
+      // Rules for AI Diet Plans
+      match /diet_plans/{planId} {
+        allow get, list: if isSignedIn() && request.auth.uid == userId;
+        allow create, update, delete: if isSignedIn() && request.auth.uid == userId;
+      }
+
+      // Rules for User Diet Profile Settings
+      match /diet_profile/{docId} {
+        allow get, list: if isSignedIn() && request.auth.uid == userId;
+        allow create, update, delete: if isSignedIn() && request.auth.uid == userId;
+      }
+
+      // Rules for Daily Nutrition Logs
+      match /daily_nutrition/{dateKey} {
+        allow get, list: if isSignedIn() && request.auth.uid == userId;
+        allow create, update, delete: if isSignedIn() && request.auth.uid == userId;
+
+        match /entries/{entryId} {
+          allow get, list: if isSignedIn() && request.auth.uid == userId;
+          allow create, update, delete: if isSignedIn() && request.auth.uid == userId;
+        }
+      }
+
+      // Rules for Daily Routine Items
+      match /daily_routine/{routineId} {
+        allow get, list: if isSignedIn() && request.auth.uid == userId;
+        allow create, update, delete: if isSignedIn() && request.auth.uid == userId;
+      }
+    }
+  }
+}

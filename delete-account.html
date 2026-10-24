@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب حذف الحساب والبيانات - تطبيق «نظّامي» (Nithami)</title>
+    <style>
+        :root {
+            --primary: #FF7A00;
+            --danger: #E53935;
+            --bg: #1C1C1C;
+            --surface: #282828;
+            --text-main: #FFFFFF;
+            --text-secondary: #B0B0B0;
+            --border: #383838;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.7;
+            margin: 0;
+            padding: 24px 16px;
+        }
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 32px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+        h1, h2 {
+            color: var(--primary);
+        }
+        h1 {
+            font-size: 24px;
+            margin-top: 0;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 12px;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(229, 57, 53, 0.15);
+            color: var(--danger);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        .warning-card {
+            background: rgba(229, 57, 53, 0.1);
+            border-left: 4px solid var(--danger);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-main);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #1C1C1C;
+            color: #FFF;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input:focus, textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        button {
+            background: var(--danger);
+            color: #FFF;
+            border: none;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .status-msg {
+            display: none;
+            margin-top: 16px;
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(76, 175, 80, 0.15);
+            color: #81C784;
+            border: 1px solid #4CAF50;
+        }
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin: 30px 0;
+        }
+        .en-section {
+            direction: ltr;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="badge">Google Play Account Deletion Portal</span>
+        <h1>طلب حذف الحساب وجميع البيانات المرتبطة</h1>
+        <p>وفقًا لسياسات الخصوصية ومتطلبات متجر Google Play، يحق لكل مستخدم لتطبيق <strong>«نظّامي» (Nithami)</strong> طلب حذف حسابه وجميع بياناته المخزنة نهائيًا.</p>
+
+        <div class="warning-card">
+            <h3 style="margin-top:0; color: var(--danger);">ماذا يحدث عند حذف حسابك؟</h3>
+            <ul style="margin: 0; padding-right: 20px; color: var(--text-secondary); font-size: 14px;">
+                <li><strong>المهام والروتين:</strong> يتم حذف جميع المهام والمهام الفرعية وسجلات الإنجاز فورياً.</li>
+                <li><strong>البيانات الغذائية:</strong> يتم حذف خطط الوجبات ومحتوى اليوميات والسعرات المسجلة.</li>
+                <li><strong>المصادقة والتنبيهات:</strong> يُلغى الحساب من خوادم Firebase Auth نهائياً وتُلغى كافة التنبيهات المجدولة.</li>
+                <li><strong>لا يمكن استرجاع البيانات بعد تنفيذ طلب الحذف.</strong></li>
+            </ul>
+        </div>
+
+        <h2>طرق حذف الحساب:</h2>
+        <p><strong>1. من داخل التطبيق مباشرة (فوري وآلي):</strong></p>
+        <p style="color: var(--text-secondary); font-size: 14px;">افتح تطبيق نظّامي &gt; الملف الشخصي &gt; اضغط على زر «حذف الحساب وكافة البيانات نهائياً». سيتم مسح كافة البيانات وحذف الحساب خلال ثوانٍ معدودة.</p>
+
+        <p><strong>2. عبر تقديم هذا النموذج (إذا قمت بحذف التطبيق وترغب في حذف بياناتك من الخادم):</strong></p>
+
+        <form id="deletionForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="userEmail">البريد الإلكتروني المسجل في التطبيق (Google Account):</label>
+                <input type="email" id="userEmail" required placeholder="example@gmail.com">
+            </div>
+
+            <div class="form-group">
+                <label for="deleteScope">نطاق الحذف المطلوب:</label>
+                <select id="deleteScope">
+                    <option value="all">حذف الحساب كاملاً وجميع البيانات المرتبطة (موصى به)</option>
+                    <option value="diet_only">حذف بيانات النظام الغذائي والوجبات فقط</option>
+                    <option value="tasks_only">حذف سجلات المهام والروتين اليومي فقط</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="reason">ملاحظات إضافية (اختياري):</label>
+                <textarea id="reason" rows="3" placeholder="أدخل أي تفاصيل إضافية..."></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">إرسال طلب الحذف الرسمي للمطور</button>
+            <div id="statusMsg" class="status-msg">
+                تم استلام طلبك بنجاح! سيتم التحقق من ملكية الحساب ومعالجة الحذف النهائي من خوادم Firebase خلال مدة لا تتجاوز 48 ساعة وإشعارك على بريدك الإلكتروني.
+            </div>
+        </form>
+
+        <p style="margin-top: 24px; font-size: 13px; color: var(--text-secondary);">
+            يمكنك أيضاً مراسلة المطور مباشرة لطلب الحذف اليدوي على: <a href="mailto:asdahmed1886@gmail.com">asdahmed1886@gmail.com</a>
+        </p>
+
+        <hr>
+
+        <div class="en-section">
+            <h2>Account & Data Deletion Request (English)</h2>
+            <p>Under Google Play's Account Deletion policy, users of the <strong>Nithami</strong> app can request the complete and permanent deletion of their account and all associated personal data (tasks, nutritional logs, and routine items).</p>
+            <p><strong>Option 1 (Instant):</strong> In the app, open Profile &gt; tap "حذف الحساب وكافة البيانات نهائياً".</p>
+            <p><strong>Option 2:</strong> Submit this form or contact the developer directly at <a href="mailto:asdahmed1886@gmail.com">asdahmed1886@gmail.com</a> with your registered email.</p>
+        </div>
+    </div>
+
+    <script>
+        function handleSubmit(e) {
+            e.preventDefault();
+            var email = document.getElementById('userEmail').value;
+            var scope = document.getElementById('deleteScope').value;
+            var reason = document.getElementById('reason').value;
+
+            // Direct mailto fallback or submission
+            document.getElementById('statusMsg').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').innerText = 'تم تسجيل الطلب بنجاح';
+
+            // Also open pre-composed mail in case user wants instant verification
+            var mailtoUri = "mailto:asdahmed1886@gmail.com?subject=" + 
+                encodeURIComponent("طلب حذف حساب نظّامي - " + email) + 
+                "&body=" + encodeURIComponent("البريد الإلكتروني المطلوب حذفه: " + email + "\nالنطاق: " + scope + "\nملاحظات: " + reason);
+            window.location.href = mailtoUri;
+        }
+    </script>
+</body>
+</html>

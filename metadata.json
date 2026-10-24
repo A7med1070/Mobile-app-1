@@ -1,0 +1,8 @@
+{
+  "name": "نظّامي",
+  "description": "تطبيق متطور لإدارة المهام والملاحظات اليومية وتتبع النظام الغذائي بالذكاء الاصطناعي",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

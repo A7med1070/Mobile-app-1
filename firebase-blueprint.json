@@ -1,0 +1,79 @@
+{
+  "entities": {
+    "TaskItem": {
+      "title": "TaskItem",
+      "description": "Represents a user task with priority, reminders, notes, and multimedia attachments.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the task"
+        },
+        "userId": {
+          "type": "string",
+          "description": "The authenticated user ID who owns this task"
+        },
+        "title": {
+          "type": "string",
+          "description": "Task title or main header"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed notes or body text for the task"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["URGENT", "HIGH", "MEDIUM", "LOW"],
+          "description": "Priority rating of the task"
+        },
+        "isCompleted": {
+          "type": "boolean",
+          "description": "Completion status of the task"
+        },
+        "dueDate": {
+          "type": "number",
+          "description": "Due date timestamp in milliseconds or null if no due date"
+        },
+        "hasReminder": {
+          "type": "boolean",
+          "description": "Whether an alarm reminder notification is scheduled"
+        },
+        "audioPath": {
+          "type": "string",
+          "description": "Local file path or identifier for attached audio voice note"
+        },
+        "audioDurationSeconds": {
+          "type": "number",
+          "description": "Duration of attached audio note in seconds"
+        },
+        "imageUris": {
+          "type": "array",
+          "description": "List of local or cloud photo URI paths attached to this task"
+        },
+        "subtasks": {
+          "type": "array",
+          "description": "Checklist subtasks items with title and completion state"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp. Submitted as FieldValue.serverTimestamp()"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp. Submitted as FieldValue.serverTimestamp()"
+        }
+      },
+      "required": ["userId", "title", "priority", "isCompleted", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": {
+        "$ref": "#/entities/TaskItem"
+      },
+      "description": "User specific tasks collection isolated by user ID"
+    }
+  }
+}
